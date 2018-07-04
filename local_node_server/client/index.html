@@ -659,20 +659,20 @@
 
     $( "#btnPeople" ).click(function() {
       $.ajax({
-        url:"http://0.0.0.0:8888/setCamera?id=Person",
+        url:"http://0.0.0.0:8888/setCamera?id=person",
         success:null
       });
     });
 
     $( "#btnBottle" ).click(function() {
       $.ajax({
-        url:"http://0.0.0.0:8888/setCamera?id=Bottle",
+        url:"http://0.0.0.0:8888/setCamera?id=bottle",
         success:null
       });    });
 
     $( "#btnCars" ).click(function() {
       $.ajax({
-        url:"http://0.0.0.0:8888/setCamera?id=Car",
+        url:"http://0.0.0.0:8888/setCamera?id=car",
         success:null
       });    
     });
@@ -680,7 +680,7 @@
     var lastcount=0;
 
     var bottleurl = "https://api-project-100203780418.appspot.com/bottle";
-    var peopleurl = "/people.txt"
+    var peopleurl = "https://api-project-100203780418.appspot.com/people"
 
     function bottlessuccess(data){
       
@@ -707,7 +707,7 @@
     }
 
     function peoplesuccess(data){
-      console.log("people " + data);
+      console.log("people " + data.Count);
       //chartProfit
         var chartProfitData = [
             {
@@ -718,7 +718,7 @@
                     [7, 0], [8, 0], [9, 8], [10, 14],
                     [11, 12], [12, 16], [13, 9], [14, 10],
                     [15, 14], [16, 15], [17, 9], [18, 4],
-                    [19, 7], [20, data]
+                    [19, 7], [20, data.Count]
                 ],
 
                 lines: {
@@ -816,7 +816,7 @@
     }
 
     setInterval(bottles, 1000)
-//    setInterval(people, 1000)
+    setInterval(people, 1000)
 
   });
 

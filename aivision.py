@@ -20,6 +20,11 @@ import mvnc.mvncapi as mvnc
 from utils import visualize_output
 from utils import deserialize_output
 
+from helium_client import Helium
+helium = Helium(b'/dev/ttyS5')
+helium.connect()
+channel = helium.create_channel(b"AI Vision")
+
 # Detection threshold: Minimum confidance to tag as valid detection
 CONFIDANCE_THRESHOLD = 0.60 # 60% confidant
 
@@ -125,9 +130,10 @@ def infer_image( graph, img, frame ):
                        thickness=4,
                        color=(255, 255, 0),
                        display_str=display_str )
-
-    #if lastcount != count:
- 
+    if lastcount != count:
+        datastring='Type=' + selected + "&Count=" + str(count)
+        channel.send(datastring.encode())
+        lastcount = count;
     print( '\n' )
 
     # If a display is available, show the image on which inference was performed
