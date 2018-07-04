@@ -131,7 +131,7 @@ def infer_image( graph, img, frame ):
                        thickness=4,
                        color=(255, 255, 0),
                        display_str=display_str )
-    if lastcount != count:
+    if lastcount != count and selected != '':
         datastring='Type=' + selected + "&Count=" + str(count)
         channel.send(datastring.encode())
         lastcount = count;
