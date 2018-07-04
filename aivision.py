@@ -104,14 +104,15 @@ def infer_image( graph, img, frame ):
     global lastcount
     count = 0
     file = open('label.txt','r')
-    selected = file.read()
+    selected = file.read().replace('\n','')
     file.close()
+
     for i in range( 0, output_dict['num_detections'] ):
         print( "%3.1f%%\t" % output_dict['detection_scores_' + str(i)] 
                + labels[ int(output_dict['detection_classes_' + str(i)]) ]
                + ": Top Left: " + str( output_dict['detection_boxes_' + str(i)][0] )
                + " Bottom Right: " + str( output_dict['detection_boxes_' + str(i)][1] ) )
-        if selected in labels[ int(output_dict['detection_classes_' + str(i)]) ]:
+        if str(selected) in labels[ int(output_dict['detection_classes_' + str(i)]) ]:
             count = count + 1
             # Draw bounding boxes around valid detections 
             (y1, x1) = output_dict.get('detection_boxes_' + str(i))[0]
@@ -130,10 +131,16 @@ def infer_image( graph, img, frame ):
                        thickness=4,
                        color=(255, 255, 0),
                        display_str=display_str )
+<<<<<<< HEAD
     if lastcount != count:
         datastring='Type=' + selected + "&Count=" + str(count)
         channel.send(datastring.encode())
         lastcount = count;
+=======
+    print(count)
+    #if lastcount != count:
+ 
+>>>>>>> b4f3953452521c8e756c736b08573c14908e77c6
     print( '\n' )
 
     # If a display is available, show the image on which inference was performed
