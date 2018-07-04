@@ -98,7 +98,7 @@ def infer_image( graph, img, frame ):
 
     global lastcount
     count = 0
-    file = open('.label.txt','r')
+    file = open('label.txt','r')
     selected = file.read()
     file.close()
     for i in range( 0, output_dict['num_detections'] ):
