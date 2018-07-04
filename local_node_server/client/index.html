@@ -679,13 +679,13 @@
 
     var lastcount=0;
 
-    var bottleurl = "/bottles.txt";
+    var bottleurl = "https://api-project-100203780418.appspot.com/bottle";
     var peopleurl = "/people.txt"
 
     function bottlessuccess(data){
-      console.log("result " + data);
-      $('#milk').text(data);
-      if(data < 3)
+      
+      $('#milk').text(data.Count);
+      if(data.Count < 3)
       {
         $('#milkstatus').text('low')
       }
@@ -693,10 +693,10 @@
       {
         $('#milkstatus').text('medium') 
       }
-      if(lastcount != data)
+      if(lastcount != data.Count)
       {
       }
-    lastcount = data
+      lastcount = data.Count
     }
     function bottles()
     {
@@ -805,6 +805,8 @@
         $.plot($("#chart-profit"), chartProfitData, chartProfitOptions);
 
     }
+
+
     function people()
     {
       $.ajax({
@@ -814,7 +816,7 @@
     }
 
     setInterval(bottles, 1000)
-    setInterval(people, 1000)
+//    setInterval(people, 1000)
 
   });
 

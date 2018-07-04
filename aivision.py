@@ -29,6 +29,7 @@ ARGS                 = None
 # OpenCV object for video capture
 camera               = None
 
+lastcount = 0
 # ---- Step 1: Open the enumerated device and get a handle to it -------------
 
 def open_ncs_device():
@@ -94,6 +95,39 @@ def infer_image( graph, img, frame ):
                       CONFIDANCE_THRESHOLD, 
                       frame.shape )
 
+
+    global lastcount
+    count = 0
+    file = open('.label.txt','r')
+    selected = file.read()
+    file.close()
+    for i in range( 0, output_dict['num_detections'] ):
+        print( "%3.1f%%\t" % output_dict['detection_scores_' + str(i)] 
+               + labels[ int(output_dict['detection_classes_' + str(i)]) ]
+               + ": Top Left: " + str( output_dict['detection_boxes_' + str(i)][0] )
+               + " Bottom Right: " + str( output_dict['detection_boxes_' + str(i)][1] ) )
+        if selected in labels[ int(output_dict['detection_classes_' + str(i)]) ]:
+            count = count + 1
+            # Draw bounding boxes around valid detections 
+            (y1, x1) = output_dict.get('detection_boxes_' + str(i))[0]
+            (y2, x2) = output_dict.get('detection_boxes_' + str(i))[1]
+
+            # Prep string to overlay on the image
+            display_str = ( 
+                labels[output_dict.get('detection_classes_' + str(i))]
+                + ": "
+                + str( output_dict.get('detection_scores_' + str(i) ) )
+                + "%" )
+
+            frame = visualize_output.draw_bounding_box( 
+                       y1, x1, y2, x2, 
+                       frame,
+                       thickness=4,
+                       color=(255, 255, 0),
+                       display_str=display_str )
+
+    #if lastcount != count:
+ 
     # Print the results (each image/frame may have multiple objects)
     print( "I found these objects in "
             + " ( %.2f ms ):" % ( numpy.sum( inference_time ) ) )
