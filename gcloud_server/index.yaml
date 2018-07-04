@@ -1,0 +1,6 @@
+indexes:
+- kind: AIVision
+  properties:
+  - name: Type
+  - name: timestamp
+    direction: desc
